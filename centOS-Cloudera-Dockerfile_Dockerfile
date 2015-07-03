@@ -1,0 +1,17 @@
+# Version Levels used
+	## Windows 7
+	## Boot2Docker 1.7.0
+	## Docker 1.7.0
+	## CentOS 6.6 (Docker image from 
+	## Cloudera 5.4.3
+	
+	FROM centos:6.6
+	MAINTAINER mystique <b4wt@quantumfoam.uni.me>
+
+yum -y install ntp ntpdate ntp-doc
+
+#Getting the Oracle Java version RPM, installing and removing the RPM ( i copied to local system incase i need it again)
+RUN yum install -y wget && wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u5-b13/jdk-8u5-linux-x64.rpm
+RUN rpm -ivh jdk-8u5-linux-x64.rpm && rm -f jdk-8u5-linux-x64.rpm
+
+#
