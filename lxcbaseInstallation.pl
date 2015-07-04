@@ -1,5 +1,14 @@
 #!/usr/bin/perl
-#Get the network configs setup
+###########################################################
+#	Author : Miztiik
+#	Date   : 04July2015
+#	Version: 0.1
+#	This script gives a template to start with lxc containers.
+#	In future will need to plan to integrate it with vagrant to automate it
+## TODO:
+#	* Installing LXC Webpanel
+###########################################################
+
 
 ## Installing and Configuring the Software
 # Check and install if you have EPEL Packages.
@@ -16,7 +25,9 @@ yum -y update
 yum -y clean all
 
 #Get the necessary tools for lxc
-yum -y libcgroup
+## Suprisingly rsync & libcgroup was not in my base image, failed my first attempt
+yum -y install rsync
+yum -y install libcgroup
 
 #Start the Control Groups (cgroups) service, cgconfig, and configure the service to start at boot time.
 service cgconfig start
@@ -68,15 +79,17 @@ EOF
 service network restart
 
 ## Creating and Starting a Container
-# I prefer using the centos templates to create them than to bootstrap
+## I prefer using the centos templates to create them than to bootstrap
 ## -n option gives the name of the lxc container name 
 ## -t specifies the tempate to be used.
-lxc-create -n lxc-base -t centos --lxcpath=/root/lxcContainers
+## Dont change the lxcpath, need as a pre-req for lxc webpanel and container doesn't start fails with error
+lxc-create -n lxc-base -t centos --lxcpath=/var/lib/lxc/
 
 ## Change the root password provided by the template.
 
 # Starting the container
 lxc-start -n lxc-base
+# Incase any issues with cgroup memory, refer here ->https://github.com/lxc/lxc/issues/345
 
 # To list containers
 lxc-ls
