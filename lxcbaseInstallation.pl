@@ -6,7 +6,7 @@
 #	This script gives a template to start with lxc containers.
 #	In future will need to plan to integrate it with vagrant to automate it
 ## TODO:
-#	* Installing LXC Webpanel
+#	* Installing LXC Webpanel (woudlnt work by default in CentOS)
 ###########################################################
 
 
@@ -54,6 +54,7 @@ cat > /etc/sysconfig/network-scripts/ifcfg-eth2 << EOF
 DEVICE=eth2
 TYPE=Ethernet
 ONBOOT=yes
+DELAY=0
 BRIDGE=br0
 USERCTL=no
 IPV6INIT=no
@@ -69,7 +70,6 @@ TYPE=Bridge
 IPADDR=192.168.56.100
 NETWORK=192.168.0.0
 NETMASK=255.255.255.0
-GATEWAY=192.168.0.1
 MTU=1500
 DNS1=192.168.0.1
 IPV6INIT=no
